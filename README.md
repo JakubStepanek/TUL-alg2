@@ -1,6 +1,6 @@
 # TUL-alg2
 
-School work in summer semester ALG2,java,OOP
+School work in summer semester ALG2,Java,OOP
 
 
 GIT tools
