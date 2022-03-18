@@ -1,41 +1,87 @@
-import java.util.Objects;
+import java.util.Arrays;
 
 public class Polynom {
-    private int[] coefficients;
+    private final int[] coeff;
 
-    public Polynom() {
+    private Polynom(int[] coeff) { // jiz je obraceny, vhodny pro ulozeni
+        this.coeff = Arrays.copyOf(coeff, coeff.length);
     }
 
-    public Polynom(int[] coefficients) {
-        this.coefficients = coefficients;
+    public static Polynom getInstanceFromReverted(int[] coeff) {
+        return new Polynom(coeff);
     }
 
-    public int[] getCoefficients() {
-        return this.coefficients;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Polynom)) {
-            return false;
+    public static Polynom getInstanceFromNonReverted(int[] coeff) {
+        int[] temp = new int[coeff.length];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = coeff[coeff.length - 1 - i];
         }
-        Polynom polynom = (Polynom) o;
-        return Objects.equals(coefficients, polynom.coefficients);
+        return new Polynom(temp);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(coefficients);
+    public static Polynom getInstanceFromRevertedVararg(int... coeff) {
+        return getInstanceFromReverted(coeff);
+    }
+
+    public static Polynom getInstanceFromNonRevertedVararg(int... coeff) {
+        return getInstanceFromNonReverted(coeff);
+    }
+
+    public Polynom(int x0) {
+        this.coeff = new int[1];
+        this.coeff[0] = x0;
+    }
+
+    public Polynom(int x1, int x0) {
+        this.coeff = new int[2];
+        this.coeff[0] = x0;
+        this.coeff[1] = x1;
+    }
+
+    public Polynom derivate() {
+        int[] der = new int[coeff.length - 1];
+
+        for (int i = 0; i < der.length; i++) {
+            der[i] = coeff[i + 1] * (i + 1);
+        }
+        return Polynom.getInstanceFromReverted(der);
+    }
+
+    public int[] getCoeff() {
+        return Arrays.copyOf(coeff, coeff.length);
+    }
+
+    public int getCoeffAt(int i) {
+        return coeff[i];
     }
 
     @Override
     public String toString() {
-        return "{" +
-                " coefficients='" + getCoefficients() + "'" +
-                "}";
+        StringBuilder sb = new StringBuilder("");
+        for (int i = this.coeff.length - 1; i >= 0; i--) {
+            if (this.coeff[i] != 0) {
+                sb.append(this.coeff[i]).append("x^").append(i).append(" ");
+            }
+        }
+        return sb.toString();
     }
 
+    public int getDegree(int[] coeff) {
+        return coeff[coeff.length - 1];
+    }
+
+    public int ValueOf(int x) {
+        int temp = coeff[0] + x;
+        for (int i = 1; i < coeff.length - 1; i++) {
+            temp = temp * (coeff[i] + x);
+        }
+        return temp;
+    }
+
+    public static void main(String[] args) {
+        int[] intArray = new int[] { 0, 0, -4, 0, 0, 2 };
+        Polynom myPolynom = Polynom.getInstanceFromReverted(intArray);
+        System.out.println(myPolynom);
+
+    }
 }
