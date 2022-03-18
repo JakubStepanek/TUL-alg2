@@ -66,8 +66,8 @@ public class Polynom {
         return sb.toString();
     }
 
-    public int getDegree(int[] coeff) {
-        return coeff[coeff.length - 1];
+    public int getDegree() {
+        return this.coeff.length - 1;
     }
 
     public int ValueOf(int x) {
@@ -82,6 +82,7 @@ public class Polynom {
         int[] intArray = new int[] { 0, 0, -4, 0, 0, 2 };
         Polynom myPolynom = Polynom.getInstanceFromReverted(intArray);
         System.out.println(myPolynom);
+        System.out.println(myPolynom.getDegree());
 
     }
 }
