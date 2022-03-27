@@ -1,5 +1,3 @@
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 public class Kalendar {
     private final int createdDay;
     private final int createdMonth;
@@ -14,7 +12,7 @@ public class Kalendar {
     private String[] monthsInYear = { "", "Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen",
             "Září", "Říjen", "Listopad", "Prosinec", "Leden", "Únor" };
 
-    private Kalendar(int day, int month, int year) {
+    public Kalendar(int day, int month, int year) {
         this.day = day;
         this.month = month;
         this.year = year;
